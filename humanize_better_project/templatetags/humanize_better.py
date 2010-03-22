@@ -1,5 +1,5 @@
 from django import template
-import datetime
+import datetime, math
 
 register = template.Library()
 
@@ -24,7 +24,10 @@ def timeago(value, timestamp = datetime.datetime.utcnow(), suffix = "ago"):
         "years"     : "%d years"
     }
     
-    timeDiff = timestamp - value
+    try:
+        timeDiff = timestamp - value
+    except Exception, e:
+        return e
     seconds = timeDiff.seconds + (timeDiff.days * 96400);
     minutes = seconds / 60;
     hours = minutes / 60;
